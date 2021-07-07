@@ -3,7 +3,7 @@ function buildMetadata(selection) {
 
     // reading the data from the JSON file
     d3.json("samples.json").then((sampledData) => {
-        console.log(sampledData);
+       // console.log(sampledData);
 
         // identify data as metadata
         var parsedData = sampledData.metadata;
@@ -28,7 +28,7 @@ function buildCharts(selection) {
 
     // to read the data imported from json file
     d3.json("samples.json").then((sampledData) => {
-        // console.log(sampleData);
+        // console.log(sampledData);
         
         // identify the data 
         var parsedData = sampledData.samples;
@@ -98,7 +98,7 @@ function buildCharts(selection) {
 function init() {
     // reading imported data
     d3.json("samples.json").then((sampledData) => {
-        // console.log(sampleData);
+        // console.log(sampledData);
 
         // identify and filter the data
         var parsedData = sampledData.names;
@@ -114,7 +114,7 @@ function init() {
 
     });
 }
-console.log(sampledData)
+//console.log(sampledData)
 // changing metadata with any new selection
 function optionChanged(newSelection) {
     buildMetadata(newSelection); 
