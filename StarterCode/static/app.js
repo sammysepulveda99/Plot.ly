@@ -58,6 +58,7 @@ function buildCharts(selection) {
             x: barChartValues,
             text: barCharthovertext,
             orientation: 'h'
+            
         };
 
 
