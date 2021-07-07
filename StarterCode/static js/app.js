@@ -39,7 +39,7 @@ function buildCharts(selection) {
         var sampleValues = sample2.sample_values; 
         var barChartValues = sampleValues.slice(0, 10).reverse();
         //otu ids for color
-        var idValues = sampleDict.otu_ids;
+        var idValues = sample2.otu_ids;
         var barChartLabels = idValues.slice(0, 10).reverse();
         
         var labels2 = [];
@@ -48,7 +48,7 @@ function buildCharts(selection) {
     
         });
         //otu labels for chart labels
-        var hovertext = sampleDict.otu_labels;
+        var hovertext = sample2.otu_labels;
         var barCharthovertext = hovertext.slice(0, 10).reverse();
 
         // creating our bar layout
@@ -102,18 +102,19 @@ function init() {
 
         // identify and filter the data
         var parsedData = sampledData.names;
-        //creating our drop down menu
+        //creating the drop down menu
         var dropdownMenu = d3.select("#selDataset");
         parsedData.forEach((name) => {
             dropdownMenu.append("option").property("value", name).text(name);
         })
 
-        // to set the initial plots
+        // to set  initial plots
         buildMetadata(parsedData[0]);
         buildCharts(parsedData[0]);
 
     });
 }
+console.log(sampledData)
 // changing metadata with any new selection
 function optionChanged(newSelection) {
     buildMetadata(newSelection); 
