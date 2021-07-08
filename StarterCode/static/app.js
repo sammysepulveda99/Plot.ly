@@ -57,15 +57,16 @@ function buildCharts(selection) {
             y: labels2,
             x: barChartValues,
             text: barCharthovertext,
-            orientation: 'h'
-            
+            orientation: 'h',
         };
-
+        var barCHartLayout = {
+            title: "Top 10 Bacteria Cultures Found",
+        }
 
         var barChartData = [barChartTrace];
         
         //plotly for chart type, layout and data
-        Plotly.newPlot("bar", barChartData);
+        Plotly.newPlot("bar", barChartData,barCHartLayout);
 
 
         //creating our bubbleChart
@@ -82,19 +83,65 @@ function buildCharts(selection) {
         // bubble chart with all the layout
         var bubbleChartData = [bubblechart1];
         var bubblelayout = {
+            title: "Bacteria Cultures per Sample",
             showlegend: false,
             height: 600,
             width: 1000,
             xaxis: {
                 title: "OTU ID"
-            }
+            },
+        
         };
         //creating plotly, stating it is bubble and our layout
         Plotly.newPlot("bubble", bubbleChartData, bubblelayout);
     });
 
 }
-
+// function to create charts for the smaples
+function buildCharts2(selection1) {
+    // to read the data imported from json file
+    d3.json("samples.json").then((sampledData) => {
+     
+        
+        // identify the data 
+        var parsedData = sampledData.samples;
+    
+        //filtering the data with item id
+        var sample2 = parsedData.filter(item => item.id == selection1)[0];
+    var gaugeValues = sample2.wfreq;
+    
+    //Gauge Chart
+    var data = [
+        {
+          domain: { x: [0, 1], y: [0, 1] },
+          value: gaugeValues,
+          title: { text: "Belly Button Washing Frequency" },
+          type: "indicator",
+          mode: "gauge+number+delta",
+          gauge: {
+            axis: { range: [null, 9] },
+            threshold: {
+                line: { color: "black", width: 6 },
+                thickness: 0.85,
+                value: gaugeValues },
+            steps: [
+              { range: [0, 1], color: "red" },
+              {range: [1, 2], color: "orange" },
+              {range: [2, 3], color: "yellow" },
+              {range: [3, 4], color: "green" },
+              {range: [4, 5], color: "blue" },
+              {range: [5, 6], color: "purple" },
+              {range: [6, 7], color: "cyan" },
+              {range: [7, 8], color: "grey" },
+              {range: [8, 9], color: "lightgray" }
+            ],
+          }
+        }
+      ];
+      
+      var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+      Plotly.newPlot('gauge', data, layout);
+    })}
 // running our page load with a function
 function init() {
     // reading imported data
@@ -112,6 +159,7 @@ function init() {
         // to set  initial plots
         buildMetadata(parsedData[0]);
         buildCharts(parsedData[0]);
+        buildCharts2(parsedData[0]);
 
     });
 }
@@ -120,6 +168,7 @@ function init() {
 function optionChanged(newSelection) {
     buildMetadata(newSelection); 
     buildCharts(newSelection);
+    buildCharts2(newSelection);
 }
 // command to initialze dashboard
 init();
